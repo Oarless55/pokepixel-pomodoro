@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 🎯 SEO META TAGS -->
+    <title>Pixel Pomodoro - Cozy Study Timer with Spotify & Notes 🎮</title>
+    <meta name="description" content="Free pixel art pomodoro timer for productive studying. Features Spotify integration, sticky notes, and beautiful pixel themes. Start focusing now!">
+    <meta name="keywords" content="pomodoro timer, study timer, pixel art, productivity app, spotify timer, focus timer, online pomodoro, sticky notes">
+    <meta name="author" content="Oarless55">
+    <meta name="robots" content="index, follow">
+    
+    <!-- 🌍 LANGUAGE -->
+    <meta name="language" content="English">
+    <meta http-equiv="content-language" content="en-US">
+    
+    <!-- 📱 SOCIAL MEDIA - Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pixel Pomodoro">
+    <meta property="og:title" content="Pixel Pomodoro - Cozy Study Timer 🎮">
+    <meta property="og:description" content="Free pixel art pomodoro timer with Spotify integration and sticky notes for productive studying">
+    <meta property="og:url" content="https://oarless55.github.io/Pixel-Pomodoro/">
+    <meta property="og:image" content="https://i.pinimg.com/originals/1d/1a/4d/1d1a4d12a523ae4b35205f18f1a3535e.gif">
+    
+    <!-- 🐦 TWITTER -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pixel Pomodoro - Cozy Study Timer">
+    <meta name="twitter:description" content="Free pixel art pomodoro timer with Spotify & notes">
+    
+    <!-- 🎨 THEME COLORS -->
+    <meta name="theme-color" content="#e94560">
+    <meta name="msapplication-navbutton-color" content="#e94560">
+    
+    <!-- 🔗 CANONICAL URL -->
+    <link rel="canonical" href="https://oarless55.github.io/Pixel-Pomodoro/">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', cursive, monospace;
+        }
+
+        body {
+            background-color: #1a1a2e;
+            background-image: url('https://i.pinimg.com/originals/1d/1a/4d/1d1a4d12a523ae4b35205f18f1a3535e.gif');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            padding-top: 140px;
+        }
+        
+        /* ============ REKLAM PANELİ ============ */
+        .ad-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(90deg, #e94560 0%, #0f3460 50%, #e94560 100%);
+            background-size: 200% 100%;
+            border-bottom: 6px solid #000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: adPulse 5s ease-in-out infinite;
+        }
+        
+        @keyframes adPulse {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .ad-content {
+            background: rgba(0,0,0,0.85);
+            border: 4px solid #fff;
+            padding: 10px 30px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(233,69,96,0.5);
+        }
+        
+        .ad-content h3 {
+            font-size: 10px;
+            color: #00eeff;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        
+        .ad-content p {
+            font-size: 7px;
+            color: #fff;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        /* ============ NOT KAĞITLARI ============ */
+        .notes-panel {
+            position: fixed;
+            left: 20px;
+            top: 120px;
+            width: 280px;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+            z-index: 90;
+            padding: 10px;
+        }
+        
+        .notes-header {
+            background: rgba(0,0,0,0.85);
+            border: 4px solid #e94560;
+            padding: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(233,69,96,0.5);
+        }
+        
+        .notes-header h3 {
+            font-size: 10px;
+            color: #e94560;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .add-note-btn {
+            background-color: #4CAF50;
+            border: 3px solid #000;
+            color: white;
+            padding: 8px 15px;
+            font-size: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 3px 3px 0 #000;
+            transition: all 0.1s;
+            text-shadow: 1px 1px 0 #000;
+        }
+        
+        .add-note-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 #000;
+        }
+        
+        .sticky-note {
+            background: linear-gradient(135deg, #fff740 0%, #fff066 100%);
+            border: 3px solid #000;
+            padding: 12px;
+            margin-bottom: 15px;
+            min-height: 120px;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+            position: relative;
+            animation: noteAppear 0.3s ease;
+        }
+        
+        @keyframes noteAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+            padding-bottom: 5px;
+        }
+        
+        .note-date {
+            font-size: 6px;
+            color: #000;
+            opacity: 0.7;
+        }
+        
+        .delete-note-btn {
+            background: #f44336;
+            border: 2px solid #000;
+            color: white;
+            font-size: 6px;
+            padding: 2px 6px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0 #000;
+        }
+        
+        .delete-note-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 1px 1px 0 #000;
+        }
+        
+        .note-textarea {
+            width: 100%;
+            min-height: 80px;
+            background: rgba(255,255,255,0.5);
+            border: 2px solid #000;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #000;
+            resize: vertical;
+        }
+        
+        .note-textarea:focus {
+            outline: none;
+            background: rgba(255,255,255,0.8);
+        }
+        
+        .notes-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .notes-panel::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid #000;
+        }
+        
+        .notes-panel::-webkit-scrollbar-thumb {
+            background: #e94560;
+            border: 2px solid #000;
+        }
+
+        .container {
+            background-color: rgba(44, 44, 78, 0.85);
+            border: 8px solid #16213e;
+            padding: 30px;
+            border-radius: 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #e94560;
+            text-shadow: 3px 3px 0 #000;
+            letter-spacing: 1px;
+        }
+
+        .timer-display {
+            background-color: #0f3460;
+            border: 6px solid #16213e;
+            padding: 20px;
+            margin-bottom: 30px;
+            font-size: 48px;
+            color: #fff;
+            text-shadow: 2px 2px 0 #000;
+            letter-spacing: 2px;
+            image-rendering: pixelated;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pixel-button {
+            background-color: #e94560;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            image-rendering: pixelated;
+            border: 4px solid #000;
+            box-shadow: 4px 4px 0 #000;
+            transition: all 0.1s;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .pixel-button:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .pixel-button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0 0 0 #000;
+        }
+
+        .pixel-button.start {
+            background-color: #4CAF50;
+        }
+
+        .pixel-button.pause {
+            background-color: #FFC107;
+            color: #000;
+        }
+
+        .pixel-button.reset {
+            background-color: #F44336;
+        }
+
+        .session-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .session-btn {
+            background-color: #0f3460;
+            border: 4px solid #000;
+            color: white;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 #000;
+            transition: all 0.1s;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .session-btn:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .session-btn.active {
+            background-color: #e94560;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 #000;
+        }
+
+        .session-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding-top: 100px;
+            }
+            
+            .ad-banner {
+                height: 70px;
+            }
+            
+            .ad-content h3 {
+                font-size: 8px;
+            }
+            
+            .ad-content p {
+                font-size: 6px;
+            }
+            
+            .notes-panel {
+                display: none;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 18px;
+            }
+            
+            .timer-display {
+                font-size: 36px;
+            }
+            
+            .pixel-button {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+
+        :root{
+            --primary-color:#0004ff;
+            --secondary-color:#0030cc;
+            --accent-color:#00eeff;
+            --text-color:#fff;
+            --glow-color:rgba(0,255,0,.5)
+        }
+        
+        .spotify-widget{
+            position:fixed;
+            top:190px;
+            right:45px;
+            z-index:99;
+            width:260px;
+            background:rgba(0,0,0,.65);
+            border:3px solid var(--primary-color);
+            backdrop-filter:blur(6px);
+            padding:10px;
+            box-shadow:0 0 15px var(--glow-color)
+        }
+        
+        .spotify-widget h4{
+            color:var(--primary-color);
+            font-size:9px;
+            text-align:center;
+            margin-bottom:6px;
+            text-shadow:0 0 8px var(--glow-color);
+            letter-spacing:1px
+        }
+        
+        #spotifyPlayer{
+            width:100%;
+            margin-bottom: 10px;
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+        
+        .bg-select{margin-top:10px}
+        .bg-select select{
+            width:100%;
+            padding:6px;
+            font-size:8px;
+            background:rgba(0,0,0,.8);
+            color:var(--primary-color);
+            border:2px solid var(--primary-color);
+            cursor:pointer
+        }
+        .bg-select label{
+            display:block;
+            font-size:8px;
+            color:var(--primary-color);
+            margin-bottom:4px
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- REKLAM PANELİ -->
+    <div class="ad-banner">
+        <div class="ad-content">
+            <h3>📢 REKLAM ALANI</h3>
+            <p>Google AdSense kodunuzu buraya ekleyin</p>
+        </div>
+    </div>
+
+    <!-- NOT KAĞITLARI -->
+    <div class="notes-panel">
+        <div class="notes-header">
+            <h3>📝 NOTLAR</h3>
+            <button class="add-note-btn" onclick="addNote()">+ YENİ NOT</button>
+        </div>
+        <div id="notesContainer"></div>
+    </div>
+    
+    <div class="container">
+        <h1>PIXEL STUDY TIMER</h1>
+        
+        <div class="timer-display" id="timer">
+            60:00
+        </div>
+        
+        <div class="controls">
+            <button class="pixel-button start" id="startBtn">START</button>
+            <button class="pixel-button pause" id="pauseBtn">PAUSE</button>
+            <button class="pixel-button reset" id="resetBtn">RESET</button>
+        </div>
+        
+        <div class="session-controls">
+            <button class="session-btn active" data-time="60">60 MIN</button>
+            <button class="session-btn" data-time="25">25 MIN</button>
+            <button class="session-btn" data-time="5">5 MIN</button>
+            <button class="session-btn" data-time="10">10 MIN</button>
+        </div>
+        
+        <div class="session-info">
+            <p>Session: <span id="sessionCount">0</span> | Break: <span id="breakCount">0</span></p>
+        </div>
+    </div>
+
+    <div class="spotify-widget" id="widget">
+        <h4>🎧 SPOTIFY PLAYLIST</h4>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/729S9imGyeuTNxdD8SOj1I?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    
+        <div class="bg-select">
+            <label for="bgSel">THEME ✨</label>
+            <select id="bgSel">
+                <option value="https://i.pinimg.com/originals/ea/f2/10/eaf2102aaa597054f587c5caaeb9e3da.gif">🌊 Wave Grid</option>
+                <option value="https://i.pinimg.com/originals/1d/1a/4d/1d1a4d12a523ae4b35205f18f1a3535e.gif" selected>🌌 Pixel City</option>
+                <option value="https://i.pinimg.com/originals/f4/35/00/f43500eba99d32bd7ad50decfb9073c4.gif">🌠 Star Night</option>
+                <option value="https://i.pinimg.com/originals/14/ae/7e/14ae7ede205573466d68eb3a562fe349.gif">🌴 Poke Night</option>
+                <option value="https://i.pinimg.com/originals/c0/a2/c1/c0a2c1bbf109de83b2b474ab2795b847.gif">🛰️ Jack and Chill</option>
+                <option value="https://i.pinimg.com/originals/1a/f6/89/1af689d42bdb7686df444f22925f9e89.gif">🌧️ Rain</option>
+            </select>
+        </div>
+    </div>
+    
+    <script>
+        // Timer variables
+        let timer;
+        let isRunning = false;
+        let timeLeft = 60 * 60;
+        let currentSessionTime = 60 * 60;
+        let sessionCount = 0;
+        let breakCount = 0;
+        let isBreakTime = false;
+
+        const timerDisplay = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const sessionBtns = document.querySelectorAll('.session-btn');
+        const sessionCountDisplay = document.getElementById('sessionCount');
+        const breakCountDisplay = document.getElementById('breakCount');
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateDisplay() {
+            timerDisplay.textContent = formatTime(timeLeft);
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        isRunning = false;
+                        playNotification();
+                        
+                        if (!isBreakTime) {
+                            sessionCount++;
+                            sessionCountDisplay.textContent = sessionCount;
+                            alert('Study session completed! Time for a break.');
+                            isBreakTime = true;
+                            timeLeft = 5 * 60;
+                            currentSessionTime = 5 * 60;
+                        } else {
+                            breakCount++;
+                            breakCountDisplay.textContent = breakCount;
+                            alert('Break time over! Ready for another study session?');
+                            isBreakTime = false;
+                            timeLeft = currentSessionTime;
+                        }
+                        updateDisplay();
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                clearInterval(timer);
+                isRunning = false;
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            timeLeft = currentSessionTime;
+            updateDisplay();
+        }
+
+        function setSessionTime(minutes) {
+            if (!isRunning) {
+                currentSessionTime = minutes * 60;
+                timeLeft = currentSessionTime;
+                updateDisplay();
+                
+                sessionBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (parseInt(btn.dataset.time) === minutes) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        function playNotification() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'square';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        sessionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!isRunning) {
+                    setSessionTime(parseInt(btn.dataset.time));
+                }
+            });
+        });
+
+        updateDisplay();
+
+        /* BACKGROUND */
+        function setBackground(url){
+            document.body.style.backgroundImage = `url('${url}')`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundAttachment = 'fixed';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundRepeat = 'no-repeat';
+            localStorage.setItem('pixelTimerBG', url);
+        }
+
+        (function initBG(){
+            const bgSelect = document.getElementById('bgSel');
+            const saved = localStorage.getItem('pixelTimerBG');
+            const defaultBG = 'https://i.pinimg.com/originals/1d/1a/4d/1d1a4d12a523ae4b35205f18f1a3535e.gif';
+            
+            if(!saved || saved.includes('ea/f2/10')) {
+                setBackground(defaultBG);
+                bgSelect.value = defaultBG;
+            } else if(saved) {
+                setBackground(saved);
+                bgSelect.value = saved;
+            }
+            
+            bgSelect.addEventListener('change', function(e) {
+                setBackground(e.target.value);
+            });
+        })();
+
+        /* NOT SİSTEMİ */
+        const NOTES_KEY = 'pixelTimerNotes';
+
+        function loadNotes() {
+            const saved = localStorage.getItem(NOTES_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveNotes(notes) {
+            localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+        }
+
+        function addNote() {
+            const notes = loadNotes();
+            const newNote = {
+                id: Date.now(),
+                text: '',
+                date: new Date().toLocaleString('tr-TR')
+            };
+            notes.unshift(newNote);
+            saveNotes(notes);
+            renderNotes();
+        }
+
+        function deleteNote(id) {
+            if(confirm('Bu notu silmek istediğinizden emin misiniz?')) {
+                const notes = loadNotes().filter(note => note.id !== id);
+                saveNotes(notes);
+                renderNotes();
+            }
+        }
+
+        function updateNote(id, text) {
+            const notes = loadNotes();
+            const note = notes.find(n => n.id === id);
+            if(note) {
+                note.text = text;
+                saveNotes(notes);
+            }
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notesContainer');
+            const notes = loadNotes();
+            
+            container.innerHTML = notes.map(note => `
+                <div class="sticky-note">
+                    <div class="note-header">
+                        <span class="note-date">${note.date}</span>
+                        <button class="delete-note-btn" onclick="deleteNote(${note.id})">✕</button>
+                    </div>
+                    <textarea 
+                        class="note-textarea" 
+                        placeholder="Notunuzu buraya yazın..."
+                        onchange="updateNote(${note.id}, this.value)"
+                    >${note.text}</textarea>
+                </div>
+            `).join('');
+        }
+
+        window.addEventListener('load', renderNotes);
+    </script>
+</body>
+</html>
